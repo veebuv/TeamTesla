@@ -1,10 +1,4 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('which', ['ionic', 'which.controllers', 'which.factory'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -25,6 +19,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
+  //Main app state, contains the logic/views for the menu and login
+  //Will be present on EVERY state
     .state('app', {
     url: '/app',
     abstract: true,
@@ -32,42 +28,54 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
+  //State for viewing a single Which. ***THIS IS THE DEFAULT STATE***
+  .state('app.which', {
+    url: '/which',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/which.html',
+        controller: 'WhichCtrl'
       }
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
+  //State for creating a Which.
+  .state('app.create', {
+    url: '/create',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/create.html',
+        controller: 'CreateCtrl'
+      }
+    }
+  })
+
+  //State for after a Which has been created. Provides confirmation to the user that the Which has been created.
+  .state('app.afterCreate', {
+    url: '/afterCreate',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/afterCreate.html',
+        controller: 'AfterCreateCtrl'
+      }
+    }
+  })
+
+  //State for viewing the results of a Which
+  .state('app.result', {
+    url: '/result',
+    params: {
+      a: null,
+      b: null
+    },
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/result.html',
+        controller: 'ResultCtrl'
       }
     }
   });
+
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/which');
 });
