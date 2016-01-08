@@ -4,7 +4,6 @@ angular.module('which.controllers', ['which.factory'])
 
   // Form data for the login modal
   $scope.loginData = {};
-
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
@@ -39,7 +38,7 @@ angular.module('which.controllers', ['which.factory'])
 
 })
 
-.controller('WhichCtrl', function($scope, $state, WhichFactory, $ionicHistory) {
+.controller('WhichCtrl', function($scope, $state, $stateParams, WhichFactory, $ionicHistory) {
   $scope.username = 'Me';
 
   //Defaults the slider to the second "Image" Where are currently hosting the question
@@ -48,37 +47,33 @@ angular.module('which.controllers', ['which.factory'])
   //Probably only initially need id, question, thingA, thingB,
   //Demo object used during development
   $scope.which = {
-    id: '1',
-    question: " should I eat?",
-    createdBy: 'Vornado',
-    tags: ['chocolate', 'food'],
-    type: 'image',
-    thingA: 'http://cdn2.rosannadavisonnutrition.com/wp-content/uploads/2015/10/chocolate-chocolate-30471811-1024-768.jpg',
-    thingB: 'http://weknowyourdreams.com/images/chocolate/chocolate-01.jpg',
-    results: {
-      aCount: 31,
-      bCount: 25
-    }
+    id: $stateParams.id,
+    question: $stateParams.question,
+    thingA: $stateParams.thingA,
+    thingB: $stateParams.thingB
   }
+
+  console.log($scope.which);
 
   //Slider takes in an array, thus using the sandwich structure to display text between two images
   $scope.things = [$scope.which.thingA, $scope.which.question, $scope.which.thingB];
 
   //This gets called when the user swipes, making a decision with the choice from the user
   $scope.decide = function(choice) {
-    var results = WhichFactory.choose(choice, $scope.which.id, $scope.username);
+    WhichFactory.choose(choice, $scope.which.id, $scope.username).then(function(votingResult) {
+      console.log(votingResult)
+        //Prevent displaying back button on the landing view
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
 
-
-    //Prevent displaying back button on the landing view
-    $ionicHistory.nextViewOptions({
-      disableBack: true
+      //Allows for state change, showing new view, second argument is the params being sent in to display results
+      $state.go('app.result', {
+        a: votingResult.votesForA,
+        b: votingResult.votesForB
+      });
     });
 
-    //Allows for state change, showing new view, second argument is the params being sent in to display results
-    $state.go('app.result', {
-      a: results.a,
-      b: results.b
-    });
   }
 })
 
@@ -89,19 +84,20 @@ angular.module('which.controllers', ['which.factory'])
 
   //Function displays new which, calling the getNew factory function, and navigating to which page along with the newest which.
   $scope.getNewWhich = function() {
-    var which = WhichFactory.getNew();
+    WhichFactory.getNew().then(function(which) {
+      console.log(which);
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
 
-    $ionicHistory.nextViewOptions({
-      disableBack: true
+      $state.go('app.which', {
+        id: which.id,
+        question: which.question,
+        thingA: which.thingA,
+        thingB: which.thingB
+      });
     });
-
-    $state.go('app.which', {
-      id: which.id,
-      question: which.question,
-      thingA: which.thingA,
-      thingB: which.thingB
-    });
-  }
+  };
 })
 
 .controller('CreateCtrl', function($scope, $state, WhichFactory, $ionicHistory) {
@@ -144,17 +140,18 @@ angular.module('which.controllers', ['which.factory'])
 
   //Load newest function after submission of previous which
   $scope.getNewWhich = function() {
-    var which = WhichFactory.getNew();
+    WhichFactory.getNew().then(function(which) {
+      console.log(which);
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
 
-    $ionicHistory.nextViewOptions({
-      disableBack: true
-    });
-
-    $state.go('app.which', {
-      id: which.id,
-      question: which.question,
-      thingA: which.thingA,
-      thingB: which.thingB
+      $state.go('app.which', {
+        id: which.id,
+        question: which.question,
+        thingA: which.thingA,
+        thingB: which.thingB
+      });
     });
   };
 

@@ -31,6 +31,12 @@ angular.module('which', ['ionic', 'which.controllers', 'which.factory'])
   //State for viewing a single Which. ***THIS IS THE DEFAULT STATE***
   .state('app.which', {
     url: '/which',
+    params: {
+      id: '1',
+      question: " should I eat?",
+      thingA: 'http://cdn2.rosannadavisonnutrition.com/wp-content/uploads/2015/10/chocolate-chocolate-30471811-1024-768.jpg',
+      thingB: 'http://weknowyourdreams.com/images/chocolate/chocolate-01.jpg'
+    },
     views: {
       'menuContent': {
         templateUrl: 'templates/which.html',
