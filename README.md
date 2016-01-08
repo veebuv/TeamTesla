@@ -37,10 +37,12 @@
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
-npm install
-bower install
+npm install -g cordova
+npm install -g ionic
+npm install ./client  (if node-sass fails because of your node version, try installing it separately: npm install ./client node-sass)
+bower install ./client
 ```
+Make sure that you have a mongo database running.
 
 ### Roadmap
 
