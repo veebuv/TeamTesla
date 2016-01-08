@@ -5,6 +5,8 @@ angular.module('which.factory', [])
 
 .factory('WhichFactory', function($http) {
 
+  var serverURI = 'http://localhost:5007';
+
   /*
    * choose function is called after a decision has been made.
    * Sends an HTTP POST request to /api/which/{{id}}/judge.
@@ -50,12 +52,12 @@ angular.module('which.factory', [])
   **/
   var submit = function(which) {
     console.log(which);
-     //return $http.post('/api/which', which)
-     //  .then(function(res) {
-     //    return res.data;
-     //  }, function(err) {
-     //    return err;
-     //  });
+     return $http.post(serverURI + '/api/which', which)
+      .then(function(res) {
+        return res.data;
+      }, function(err) {
+        return err;
+      });
   }
   return {
     choose: choose,
