@@ -1,4 +1,4 @@
-angular.module('which.controllers', ['which.factory'])
+angular.module('which.controllers', ['which.factory', 'ionic.contrib.ui.tinderCards'])
 
 .controller('AppCtrl', function($scope, $state, $ionicModal, $timeout) {
 
@@ -57,6 +57,19 @@ angular.module('which.controllers', ['which.factory'])
 
   //Slider takes in an array, thus using the sandwich structure to display text between two images
   $scope.things = [$scope.which.thingA, $scope.which.question, $scope.which.thingB];
+
+
+  $scope.cardSrc = '';
+  $scope.cardPartialSwipe = function(amt) {
+    var threshold = .15;
+    if(amt < 0-threshold) {
+      $scope.cardSrc = $scope.which.thingA;
+    } else if(amt > threshold) {
+      $scope.cardSrc = $scope.which.thingB;
+    } else {
+      $scope.cardSrc = '';
+    }
+  }
 
   //This gets called when the user swipes, making a decision with the choice from the user
   $scope.decide = function(choice) {

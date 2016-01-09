@@ -12,7 +12,6 @@ module.exports = {
 
   },
 
-
   /*        Route Handler - GET /api/which/
 
         * Expects no incoming data
@@ -27,7 +26,14 @@ module.exports = {
           if ( memo.createdAt < curWhich.createdAt ) return curWhich;
           else return memo;
         });
-        res.json(newestWhich);
+
+        var clientResults = {
+          id: newestWhich._id,
+          question: newestWhich.question,
+          thingA: newestWhich.thingA,
+          thingB: newestWhich.thingB
+        }
+        res.json(clientResults);
       })
       .fail(function(err){
         next(err);

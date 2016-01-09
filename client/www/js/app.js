@@ -1,4 +1,4 @@
-angular.module('which', ['ionic', 'which.controllers', 'which.factory'])
+angular.module('which', ['ionic', 'which.controllers', 'which.factory', 'ionic.contrib.ui.tinderCards'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
