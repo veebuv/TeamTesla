@@ -1,0 +1,17 @@
+<ion-view view-title="Browse Tags">
+  <ion-content>
+
+
+    <input type="text" ng-model="data.tagSearch" placeholder="Search for tags...">
+
+
+    <button class="button button-block button-assertive text-right" ng-click="getWhichesByTag()">Search</button>
+
+
+<ion-list>
+  <ion-item ng-repeat="which in data.whiches" ng-click="goToWhich(which.id)">
+    {{which.question}}
+  </ion-item>
+</ion-list>
+</ion-content>
+</ion-view>

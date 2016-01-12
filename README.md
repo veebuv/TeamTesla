@@ -1,6 +1,6 @@
-# Project Name
+# Which?
 
-> Pithy project description
+Which? the simple <i>mobile</i> app for picking one of each pair or photos or text.  Get input!  See how your judgements match up with those of the crowd!
 
 ## Team
 
@@ -20,15 +20,22 @@
 
 ## Usage
 
-> Some usage instructions
+Clone the repo.
+
+Make sure that you have a mongo database running.  Try command ```mongod```.
+
+Start the back end server.  From root directory:  ```nodemon server/server.js```.
+
+Use ionic to serve the front end.  From the root directory:
+```sh
+cd client
+ionic serve
+```
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Node 4.2.x
+- Mongo
 
 ## Development
 
@@ -40,16 +47,14 @@ From within the root directory:
 npm install
 npm install -g cordova
 npm install -g ionic
-npm install ./client  
+npm install ./client
   (if node-sass fails because of your node version, try installing it separately: npm install ./client node-sass)
 bower install ./client
 ```
-Make sure that you have a mongo database running.  Try command ```mongod```
-
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap at https://waffle.io/HRR-TeamTesla/TeamTesla.
 
 
 ## Contributing

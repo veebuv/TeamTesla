@@ -7,8 +7,8 @@ module.exports = function (app, express){
 
   var apiRouter = express.Router();
 
-  // morgan is a console logger, 'dev' means developer mode...  copied in from Shortly Angular
-  app.use(morgan('dev'));
+  // Disable morgan while running ServerSpec
+  if (process.env.NODE_ENV !== 'test') app.use(morgan('dev'));
   app.use(cors());
   app.use(bodyParser.urlencoded( {extended:true} ));
   app.use(bodyParser.json());

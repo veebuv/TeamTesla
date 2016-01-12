@@ -1,7 +1,30 @@
-angular.module('which', ['ionic', 'which.controllers', 'which.factory', 'ionic.contrib.ui.tinderCards'])
+angular.module('which', ['ionic',
+  'which.controllers.afterCreate',
+  'which.controllers.login',
+  'which.controllers.app',
+  'which.controllers.create',
+  'which.controllers.result',
+  'which.controllers.tagView',
+  'which.controllers.which',
+  'which.controllers.signUp',
+  'which.controllers.whichesByUser',
+  'which.controllers.whichInfoCtrl',
+  'which.factory',
+  'ionic.contrib.ui.tinderCards',
+  'user.factory'
+])
 
-.run(function($ionicPlatform) {
+.run(function($rootScope, $ionicPlatform, User, $state) {
   $ionicPlatform.ready(function() {
+
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+      $rootScope.$broadcast('clear', fromState.name);
+      if (!User.isloggedIn() && toState.name !== 'app.login' && toState.name !== 'app.signUp') {
+        event.preventDefault();
+        $state.go('app.login');
+      }
+    })
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -24,7 +47,7 @@ angular.module('which', ['ionic', 'which.controllers', 'which.factory', 'ionic.c
     .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html',
+    templateUrl: 'app/app.html',
     controller: 'AppCtrl'
   })
 
@@ -39,18 +62,29 @@ angular.module('which', ['ionic', 'which.controllers', 'which.factory', 'ionic.c
     },
     views: {
       'menuContent': {
-        templateUrl: 'templates/which.html',
+        templateUrl: 'which/which.html',
         controller: 'WhichCtrl'
       }
     }
   })
 
   //State for creating a Which.
+  .state('app.tagView', {
+    url: '/tagView',
+    views: {
+      'menuContent': {
+        templateUrl: 'tagView/tagView.html',
+        controller: 'TagViewCtrl'
+      }
+    }
+  })
+
+  //State for viewing the Whiches of a tag
   .state('app.create', {
     url: '/create',
     views: {
       'menuContent': {
-        templateUrl: 'templates/create.html',
+        templateUrl: 'create/create.html',
         controller: 'CreateCtrl'
       }
     }
@@ -61,7 +95,7 @@ angular.module('which', ['ionic', 'which.controllers', 'which.factory', 'ionic.c
     url: '/afterCreate',
     views: {
       'menuContent': {
-        templateUrl: 'templates/afterCreate.html',
+        templateUrl: 'afterCreate/afterCreate.html',
         controller: 'AfterCreateCtrl'
       }
     }
@@ -76,12 +110,61 @@ angular.module('which', ['ionic', 'which.controllers', 'which.factory', 'ionic.c
     },
     views: {
       'menuContent': {
-        templateUrl: 'templates/result.html',
+        templateUrl: 'result/result.html',
         controller: 'ResultCtrl'
       }
     }
-  });
+  })
+
+  //State for user login
+
+  .state('app.login', {
+    url: '/login',
+    views: {
+      'menuContent': {
+        templateUrl: 'login/login.html',
+        controller: 'LoginCtrl'
+      }
+    }
+  })
+
+  //State for user signUp
+
+  .state('app.signUp', {
+    url: '/signUp',
+    views: {
+      'menuContent': {
+        templateUrl: 'signup/signUp.html',
+        controller: 'signUpCtrl'
+      }
+    }
+  })
+
+  //State for all user's whiches
+  .state('app.whichesByUser', {
+    url: '/whichesByUser',
+    views: {
+      'menuContent': {
+        templateUrl: 'whichesByUser/whichesByUser.html',
+        controller: 'WhichesByUserCtrl'
+      }
+    }
+  })
+
+  //State for each which made by user
+    .state('app.whichInfo', {
+      url: '/whichInfo',
+      params: {
+        which: {}
+      },
+      views: {
+        'menuContent': {
+          templateUrl: 'whichInfo/whichInfo.html',
+          controller: 'WhichInfoCtrl'
+        }
+      }
+    });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/which');
+  $urlRouterProvider.otherwise('/app/login');
 });

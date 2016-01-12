@@ -76,20 +76,89 @@ td-card img {
   top: 10px;
   left: 10px;
   font-size: 30px;
-  color: rgb(111, 250, 111);
+  color: red;
   opacity: 0;
+  font-weight: bold;
 }
 .no-text {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 30px;
-  color: rgb(255, 115, 115);
+  color: blue;
   opacity: 0;
+  font-weight: bold;
+}
+
+.class question {
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .fade {
   -webkit-transition: 0.2s opacity linear;
   transition: 0.2s opacity linear;
   opacity: 0;
+}
+
+.item-select {
+  width: 75%; /* Or whatever you'd like the width to be */
+}
+
+.item-select select {
+  left: 0;
+}
+
+.square {
+
+  position: relative;
+  width: 100%;
+  padding-bottom : 30%; /* = width for a 1:1 aspect ratio */
+  /*margin:10px;*/
+  background-color: #6addc7;
+  /*overflow:hidden;*/
+}
+
+.content {
+  position:absolute;
+  height:90%; /* = 100% - 2*5% padding */
+  width:90%; /* = 100% - 2*5% padding */
+  padding: 5%;
+  text-align: center;
+
+}
+.table{
+  display:table;
+  width:100%;
+  height:100%;
+}
+.table-cell{
+  display:table-cell;
+  vertical-align:middle;
+}
+
+.bg1{
+ /* you change this to "contain" if you don't want the images to be cropped */
+  flex:1;
+  height: 50%;
+  color: #f7f5ec;
+  background-color: #6dd6ee;
+  font-weight: bold;
+  font-size: large;
+}
+
+.bg2{
+  /* you change this to "contain" if you don't want the images to be cropped */
+  flex:1;
+  color: #f7f5ec;
+  background-color: #17ee5d;
+  font-weight: bold;
+  font-size: large;
+}
+
+.flexr{
+  display: flex;
+  height:100%;
+
 }
